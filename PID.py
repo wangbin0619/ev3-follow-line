@@ -88,8 +88,6 @@ def main():
         n3=col3.reflected_light_intensity
         n4=col4.reflected_light_intensity
 
-        debug_print('>> Color {} {} {} {} Angle {} '.format(n1,n2,n3,n4,angle))
-        
         if n1>50 :
             n1=50
         if n2>50 :

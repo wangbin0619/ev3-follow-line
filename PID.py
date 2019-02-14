@@ -80,15 +80,21 @@ def main():
     kp=0.6
 
     while True:
+
+        angle = Gyro_slave.angle
+
         n1=col1.reflected_light_intensity
         n2=col2.reflected_light_intensity
         n3=col3.reflected_light_intensity
         n4=col4.reflected_light_intensity
-        debug_print(n1,n2,n3,n4)
+
+        debug_print('>> Color {} {} {} {} Angle {} '.format(n1,n2,n3,n4,angle))
+        
         if n1>50 :
             n1=50
         if n2>50 :
             n2=50
+
         Turn=n1-n2-error
         if col3.reflected_light_intensity<40 or col4.reflected_light_intensity<40:
             if col3.reflected_light_intensity<40 :
@@ -99,11 +105,6 @@ def main():
                     n4=col4.reflected_light_intensity
                     l=-20
                     r=40
-                    MA.on(speed=l)  
-                    MB.on(speed=l) 
-                    MC.on(speed=r) 
-                    MD.on(speed=r) 
-                    debug_print('col3<40 and col1>30 and col2>30',n1,n2,n3,n4,l,r)
             else :
                 while col2.reflected_light_intensity>30 and col1.reflected_light_intensity>30:
                     n1=col1.reflected_light_intensity
@@ -112,19 +113,16 @@ def main():
                     n4=col4.reflected_light_intensity
                     l=40
                     r=-20
-                    MA.on(speed=l)  
-                    MB.on(speed=l) 
-                    MC.on(speed=r) 
-                    MD.on(speed=r)    
-                    debug_print('col4<40 and col1>30 and col2>30',n1,n2,n3,n4,l,r)
         else :
             l=Turn*kp+30        
             r=30-Turn*kp
-            MA.on(speed=l)  
-            MB.on(speed=l) 
-            MC.on(speed=r) 
-            MD.on(speed=r)
-            debug_print('col3>40 and col4>40',n1,n2,n3,n4,l,r)
+
+        MA.on(speed=l)  
+        MB.on(speed=l) 
+        MC.on(speed=r) 
+        MD.on(speed=r)
+        debug_print('>> Color {} {} {} {} Angle {} >> Left {} Right {}'.format(n1,n2,n3,n4,angle,l,r))
+   
 
 if __name__ == '__main__':
     main()

@@ -9,6 +9,7 @@ import struct
 import ev3dev2.motor as ev3_master_motor # LargeMotor,OUTPUT_A, OUTPUT_B, OUTPUT_C,OUTPUT_D
 import ev3dev2.sensor as ev3_master_sensor_port # INPUT_1,INPUT_2,INPUT_3,INPUT_4
 import ev3dev2.sensor.lego as ev3_master_sensor # ColorSensor
+import ev3dev2.button as ev3_master_button #Button
 
 DaisyChainEnabled = True
 if DaisyChainEnabled:
@@ -75,11 +76,13 @@ def main():
     col3 = ev3_master_sensor.ColorSensor(ev3_master_sensor_port.INPUT_3)
     col4 = ev3_master_sensor.ColorSensor(ev3_master_sensor_port.INPUT_4)
 
+    btn = ev3_master_button.Button()
+
     #巡线主程序
     error=0
     kp=0.6
 
-    while True:
+    while not btn.any() :
 
         angle = Gyro_slave.angle
 

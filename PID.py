@@ -122,8 +122,10 @@ def main():
         MB.on(speed=l) 
         MC.on(speed=r) 
         MD.on(speed=r)
+
         debug_print('>> Color {} {} {} {} Angle {} >> Left {} Right {}'.format(n1,n2,n3,n4,angle,l,r))
-   
+        print(n1,n2,n3,n4,angle)
+        print('L {} R {}'.format(l,r))
 
 if __name__ == '__main__':
     main()

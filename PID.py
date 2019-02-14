@@ -56,28 +56,26 @@ def main():
     set_cursor(OFF) #
     set_font('Lat15-Terminus24x12')
 
-    GyroSensor1 = ev3_master_sensor.GyroSensor(ev3_master_sensor_port.INPUT_1)
-    
+    #菊连主机资源
+    Gyro_slave = ev3_slave_sensor.GyroSensor(ev3_slave_sensor_port.INPUT_1)
+    Motor_slave = ev3_slave_motor.LargeMotor(ev3_slave_motor.OUTPUT_B)
+'''
     for i in range (1000):
         angle = GyroSensor1.angle
         print('{} Gyro angle: {}'.format(i, angle))
-
-    MB = ev3_slave_motor.LargeMotor(ev3_slave_motor.OUTPUT_B)
-    MB.on(speed=50)
-    time.sleep(10)
-    MB.off() 
-
 '''
+    #本地主机资源
+    MA = ev3_master_motor.LargeMotor(ev3_master_motor.OUTPUT_A)
+    MB = ev3_master_motor.LargeMotor(ev3_master_motor.OUTPUT_B)
+    MC = ev3_master_motor.LargeMotor(ev3_master_motor.OUTPUT_C)
+    MD = ev3_master_motor.LargeMotor(ev3_master_motor.OUTPUT_D)
 
-    MA=ev3_Master.LargeMotor(OUTPUT_A)
-    MB=LargeMotor(OUTPUT_B)
-    MC=LargeMotor(OUTPUT_C)
-    MD=LargeMotor(OUTPUT_D)
-    col1 = ColorSensor(INPUT_1)
-    col2 =  ColorSensor(INPUT_2)
-    col3 =  ColorSensor(INPUT_3)
-    col4 = ColorSensor(INPUT_4)
+    col1 = ev3_master_sensor.ColorSensor(ev3_master_sensor_port.INPUT_1)
+    col2 = ev3_master_sensor.ColorSensor(ev3_master_sensor_port.INPUT_2)
+    col3 = ev3_master_sensor.ColorSensor(ev3_master_sensor_port.INPUT_3)
+    col4 = ev3_master_sensor.ColorSensor(ev3_master_sensor_port.INPUT_4)
 
+    #巡线主程序
     error=0
     kp=0.6
 
@@ -127,7 +125,6 @@ def main():
             MC.on(speed=r) 
             MD.on(speed=r)
             debug_print('col3>40 and col4>40',n1,n2,n3,n4,l,r)
-'''
 
 if __name__ == '__main__':
     main()

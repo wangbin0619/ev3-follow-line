@@ -28,7 +28,7 @@ def debug_print(*args, **kwargs):
     This shows up in the output panel in VS Code.
     '''
     now = datetime.datetime.now().strftime('%H:%M:%S.%f')
-    print(now, end=' ')
+    print(now, end=' ', file=sys.stderr)
     print(*args, **kwargs, file=sys.stderr)
 
 def reset_console():
@@ -59,17 +59,18 @@ def main():
 
     #菊连主机资源
     Gyro_slave = ev3_slave_sensor.GyroSensor(ev3_slave_sensor_port.INPUT_1)
-    Motor_slave = ev3_slave_motor.LargeMotor(ev3_slave_motor.OUTPUT_B)
-'''
-    for i in range (1000):
-        angle = GyroSensor1.angle
-        print('{} Gyro angle: {}'.format(i, angle))
-'''
+    #Motor_slave = ev3_slave_motor.LargeMotor(ev3_slave_motor.OUTPUT_B)
+
     #本地主机资源
     MA = ev3_master_motor.LargeMotor(ev3_master_motor.OUTPUT_A)
     MB = ev3_master_motor.LargeMotor(ev3_master_motor.OUTPUT_B)
     MC = ev3_master_motor.LargeMotor(ev3_master_motor.OUTPUT_C)
     MD = ev3_master_motor.LargeMotor(ev3_master_motor.OUTPUT_D)
+
+    MA.off()  
+    MB.off()  
+    MC.off()  
+    MD.off()  
 
     col1 = ev3_master_sensor.ColorSensor(ev3_master_sensor_port.INPUT_1)
     col2 = ev3_master_sensor.ColorSensor(ev3_master_sensor_port.INPUT_2)
@@ -81,6 +82,7 @@ def main():
     #巡线主程序
     error=0
     kp=0.6
+    speed = 30
 
     while not btn.any() :
 
@@ -97,6 +99,8 @@ def main():
             n2=50
 
         Turn=n1-n2-error
+        l = r = speed
+
         if col3.reflected_light_intensity<40 or col4.reflected_light_intensity<40:
             if col3.reflected_light_intensity<40 :
                 while col1.reflected_light_intensity>30 and  col2.reflected_light_intensity>30:
@@ -123,9 +127,15 @@ def main():
         MC.on(speed=r) 
         MD.on(speed=r)
 
-        debug_print('>> Color {} {} {} {} Angle {} >> Left {} Right {}'.format(n1,n2,n3,n4,angle,l,r))
-        print(n1,n2,n3,n4,angle)
-        print('L {} R {}'.format(l,r))
+        debug_print('>> Color {:>3d} {:>3d} {:>3d} {:>3d} Angle {:>6d} >> Left {:>3.1f}  Right {:>3.1f}'.format(n1,n2,n3,n4,angle,l,r))
+#        print(n1,n2,n3,n4,angle)
+#        print('L {} R {}'.format(l,r))
+
+    MA.off()  
+    MB.off()  
+    MC.off()  
+    MD.off()  
+
 
 if __name__ == '__main__':
     main()

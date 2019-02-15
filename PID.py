@@ -64,7 +64,7 @@ def main():
     if DaisyChainEnabled :
         Gyro_slave = ev3_slave_sensor.GyroSensor(ev3_slave_sensor_port.INPUT_1)
         Motor_slave = ev3_slave_motor.MediumMotor(ev3_slave_motor.OUTPUT_B)
-    
+
     #本地主机资源
     MA = ev3_master_motor.LargeMotor(ev3_master_motor.OUTPUT_A)
     MB = ev3_master_motor.LargeMotor(ev3_master_motor.OUTPUT_B)
